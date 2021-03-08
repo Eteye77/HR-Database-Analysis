@@ -95,57 +95,78 @@ SELECT F_NAME, L_NAME, DEP_ID from EMPLOYEES
 ORDER BY DEP_ID DESC, L_NAME DESC;
 
 --- Query12 ---
+SELECT EMP_ID, SALARY, (SELECT AVG(SALARY) FROM EMPLOYEES)
+AS AVG_SALARY FROM EMPLOYEES;
+
+--- Query13 ---
+SELECT * FROM(SELECT EMP_ID, F_NAME, L_NAME, DEP_ID 
+        FROM EMPLOYEES) AS EMP4ALL;
+
+--- Query14 ---
+SELECT * FROM EMPLOYEES WHERE DEP_ID IN (SELECT DEPT_ID_DEP 
+FROM DEPARTMENTS);
+
+--- Query15 ---
+select * from employees where DEP_ID IN 
+   ( select DEPT_ID_DEP from departments where LOC_ID = 'L0002');
+   
+ --- Query16 ---
+ select DEPT_ID_DEP, DEP_NAME from departments 
+ where DEPT_ID_DEP IN ( select DEP_ID from employees 
+ where SALARY > 70000 );  
+ 
+--- Query17 ---
 select D.DEP_NAME , E.F_NAME, E.L_NAME
 from EMPLOYEES as E, DEPARTMENTS as D
 where E.DEP_ID = D.DEPT_ID_DEP;
 
---- Query13 ---
+--- Query18 ---
 select E.F_NAME,E.L_NAME, JH.START_DATE 
 	from EMPLOYEES as E 
 	INNER JOIN JOB_HISTORY as JH on E.EMP_ID=JH.EMPL_ID 
 	where E.DEP_ID ='5';
 	
---- Query14 ---	
+--- Query19 ---	
 select E.F_NAME,E.L_NAME, JH.START_DATE, J.JOB_TITLE 
 	from EMPLOYEES as E 
 	INNER JOIN JOB_HISTORY as JH on E.EMP_ID=JH.EMPL_ID 
 	INNER JOIN JOBS as J on E.JOB_ID=J.JOB_IDENT
 	where E.DEP_ID ='5';
 
---- Query 15 ---
+--- Query 20 ---
 select E.EMP_ID,E.L_NAME,E.DEP_ID,D.DEP_NAME
 	from EMPLOYEES AS E 
 	LEFT OUTER JOIN DEPARTMENTS AS D ON E.DEP_ID=D.DEPT_ID_DEP;
 	
---- Query 16 ---
+--- Query 21 ---
 select E.EMP_ID,E.L_NAME,E.DEP_ID,D.DEP_NAME
 	from EMPLOYEES AS E 
 	LEFT OUTER JOIN DEPARTMENTS AS D ON E.DEP_ID=D.DEPT_ID_DEP 
 	where YEAR(E.B_DATE) < 1980;
 
---- alt Query 16 ---
+--- alt Query 22 ---
 select E.EMP_ID,E.L_NAME,E.DEP_ID,D.DEP_NAME
 	from EMPLOYEES AS E 
 	INNER JOIN DEPARTMENTS AS D ON E.DEP_ID=D.DEPT_ID_DEP 
 	where YEAR(E.B_DATE) < 1980;
 
---- Query 17 ---
+--- Query 23 ---
 select E.EMP_ID,E.L_NAME,E.DEP_ID,D.DEP_NAME
 	from EMPLOYEES AS E 
 	LEFT OUTER JOIN DEPARTMENTS AS D ON E.DEP_ID=D.DEPT_ID_DEP 
 	AND YEAR(E.B_DATE) < 1980;
 
---- Query 18 ---
+--- Query 24 ---
 select E.F_NAME,E.L_NAME,D.DEP_NAME
 	from EMPLOYEES AS E 
 	FULL OUTER JOIN DEPARTMENTS AS D ON E.DEP_ID=D.DEPT_ID_DEP;
 
---- Query 19 ---
+--- Query 25 ---
 select E.F_NAME,E.L_NAME,D.DEPT_ID_DEP, D.DEP_NAME
 	from EMPLOYEES AS E 
 	FULL OUTER JOIN DEPARTMENTS AS D ON E.DEP_ID=D.DEPT_ID_DEP AND E.SEX = 'M';
 
---- alt Query 20 ---
+--- alt Query 26 ---
 select E.F_NAME,E.L_NAME,D.DEPT_ID_DEP, D.DEP_NAME
 	from EMPLOYEES AS E 
 	LEFT OUTER JOIN DEPARTMENTS AS D ON E.DEP_ID=D.DEPT_ID_DEP AND E.SEX = 'M';
