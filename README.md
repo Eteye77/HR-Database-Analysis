@@ -1,4 +1,4 @@
-# Sorting-and-Grouping---SQL
+# Sorting-and-Grouping
 CREATE TABLE EMPLOYEES (
                             EMP_ID CHAR(9) NOT NULL, 
                             F_NAME VARCHAR(15) NOT NULL,
